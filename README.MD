@@ -4,27 +4,33 @@
 
 A végpontokról való tájékozódáshoz olvasd el a dokumentációt.
 
-###[Dokumentáció a localhost-on](http://localhost/api/docs)
+### [Dokumentáció a localhost-on](http://localhost/api/docs)
 
-##**Build**
+## **Build**
+
 `yarn build`
 
-##**Start Docker-ben**
+## **Start Docker-ben**
+
 `yarn start`
 
-##**Stop Docker konténer**
+## **Stop Docker konténer**
+
 `yarn stop`
 
-##**Delete Docker konténer, image és volume**
+## **Delete Docker konténer, image és volume**
+
 `yarn uninstall`
 
-##**Start DEV server**
+## **Start DEV server**
+
 `yarn dev`
 
-##**Tesztelés**
+## **Tesztelés**
+
 `yarn test`
 
-##A kódban használt könyvtárak
+## A kódban használt könyvtárak
 
 - http: [express](https://openbase.com/js/express)
 - logger: [cabin](https://openbase.com/js/cabin)
