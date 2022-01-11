@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  interfa-api:
+    image: node:14
+    hostname: interfa-api
+    container-name: interfa-api
+    volumes:
+      - "./dist:/usr/src/app:ro"
+    entrypoint: ["node", "/usr/src/app/main.js"]
+    ports:
+      - "3000:80"
+    restart: always
