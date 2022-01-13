@@ -5,7 +5,7 @@ require("dotenv").config();
 const apiKey = process.env.API_KEY || "";
 let token = null;
 let tokenExpire = new Date("1970");
-let user = null;
+let customer = null;
 let phoneName = "";
 
 const checkTokenExpiration = () => {
@@ -35,12 +35,12 @@ const auth = async () => {
   });
 };
 
-const getCustomer = () => {
+const getCustomerData = (email) => {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  const email = "toth.aron@interfa.hu";
+  // const email = email || "toth.aron@interfa.hu";
   const body = `<?xml version="1.0" encoding="UTF-8" ?>
   <Params>
         <Email>${email}</Email>
@@ -49,7 +49,7 @@ const getCustomer = () => {
   axios
     .post("https://api.unas.eu/shop/getCustomer", body, config)
     .then((res) => {
-      parseString(res.data, (err, result) => {
+      return parseString(res.data, (err, result) => {
         if (err) {
           console.log("Error parsing xml: ", err);
           return;
@@ -66,7 +66,7 @@ const getCustomer = () => {
           phoneName = "";
         }
 
-        user = {
+        customer = {
           Id: pure.Id[0],
           Email: pure.Email[0],
           Contact: {
@@ -103,17 +103,18 @@ const getCustomer = () => {
             },
           },
         };
-        console.log("User: ", user);
+        console.log("Customer: ", customer);
+        return customer;
       });
     });
 };
 
-exports.getCustomer = () => {
+exports.getCustomer = (email) => {
   if (checkTokenExpiration()) {
     auth().then(() => {
-      getCustomer();
+      return { token, customer: getCustomerData(email) };
     });
   } else if (token) {
-    getCustomer();
+    return { token, customer: getCustomerData(email) };
   }
 };
