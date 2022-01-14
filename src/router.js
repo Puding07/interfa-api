@@ -4,7 +4,6 @@ const root = require("./Controller/Root/root");
 const lapszabasz = require("./Controller/Lapszabasz/lapszabasz");
 const fiok = require("./Controller/Fiok/fiok");
 const rendeles = require("./Controller/Rendeles/rendeles");
-const arajanlat = require("./Controller/Arajanlat/arajanlat");
 const blum = require("./Controller/Blum/Blum");
 
 /**
@@ -84,7 +83,7 @@ router.route("/rendeles").post(rendeles.kuldes);
  *      200:
  *        description: Returns Object
  */
-router.route("/arajanlat").post(arajanlat.kuldes);
+router.route("/arajanlat").post(rendeles.kuldes);
 
 /**
  * @swagger

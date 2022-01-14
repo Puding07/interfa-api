@@ -14,23 +14,80 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-exports.send = async () => {
-  await transporter
-    .sendMail({
-      from: '"Fred Foo 👻" <web@interfa.hu>', // sender address
-      to: "toth.aron@interfa.hu", // list of receivers
-      subject: "Hello ✔", // Subject line
-      text: "Hello world? ✔ Fred Foo 👻", // plain text body
-      html: "<b>Hello world? ✔ Fred Foo 👻</b>", // html body
-    })
-    .then((info) => {
-      console.log("Message sent: %s", info.messageId);
-    })
-    .catch((err) => console.log("Email sending failed: ", err));
+exports.send = async (type, customer, items, comment, shipping) => {
+  let error = [];
+  if (type === "Rendelés") {
+    await transporter
+      .sendMail({
+        from: '"Inter-Fa" <web@interfa.hu>', // sender address
+        to: "toth.aron@interfa.hu", // list of receivers
+        subject: "Rendelés", // Subject line
+        html: `<h2>Kedves ${customer},</h2><br>
+             <span>rendelését megkaptuk. Kollégánk hamarosan felveszi önnel a kapcsolatot.</span><br>
+             <br><span>Köszönettel,</span><br>
+             <span>Budapesti Inter-Fa Kft.</span>`, // html body
+      })
+      .then((info) => {
+        console.log("Message sent: %s", info.messageId);
+      })
+      .catch((err) => {
+        error.push(err);
+        console.log("Email sending failed: ", err);
+      });
 
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+    await transporter
+      .sendMail({
+        from: '"Inter-Fa" <web@interfa.hu>', // sender address
+        to: "web@interfa.hu", // list of receivers
+        subject: "Rendelés", // Subject line
+        html: `<h2>Rendelés érkezett <b>${customer}</b> felhasználótól.</h2><br>
+             <span>Rendelés típusa: ${comment}</span><br>
+             <span>Szállítás: ${shipping}</span><br>
+             <span>Az adatok a mellékletben találhatóak</span>`, // html body
+      })
+      .then((info) => {
+        console.log("Message sent: %s", info.messageId);
+      })
+      .catch((err) => {
+        error.push(err);
+        console.log("Email sending failed: ", err);
+      });
+  } else if (type === "Árajánlat") {
+    await transporter
+      .sendMail({
+        from: '"Inter-Fa" <web@interfa.hu>', // sender address
+        to: "toth.aron@interfa.hu", // list of receivers
+        subject: "Árajánlat", // Subject line
+        html: `<h2>Kedves ${customer},</h2><br>
+             <span>árajánlat kérelmét elküldtük. Kollégánk hamarosan felveszi önnel a kapcsolatot.</span><br>
+             <br><span>Köszönettel,</span><br>
+             <span>Budapesti Inter-Fa Kft.</span>`, // html body
+      })
+      .then((info) => {
+        console.log("Message sent: %s", info.messageId);
+      })
+      .catch((err) => {
+        error.push(err);
+        console.log("Email sending failed: ", err);
+      });
 
-  // Preview only available when sending through an Ethereal account
-  // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+    await transporter
+      .sendMail({
+        from: '"Inter-Fa" <web@interfa.hu>', // sender address
+        to: "web@interfa.hu", // list of receivers
+        subject: "Árajánlat", // Subject line
+        html: `<h2>Árajánlat kérelem érkezett <b>${customer}</b> felhasználótól.</h2><br>
+             <span>Rendelés típusa: ${comment}</span><br>
+             <span>Szállítás: ${shipping}</span><br>
+             <span>Az adatok a mellékletben találhatóak</span>`, // html body
+      })
+      .then((info) => {
+        console.log("Message sent: %s", info.messageId);
+      })
+      .catch((err) => {
+        error.push(err);
+        console.log("Email sending failed: ", err);
+      });
+  }
+  return error;
 };
