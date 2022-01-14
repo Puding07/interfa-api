@@ -29,8 +29,6 @@ const auth = async () => {
       }
       token = result.Login.Token[0];
       tokenExpire = new Date(String(result.Login.Expire));
-
-      // console.log("Token: ", token);
     });
   });
 };
@@ -39,8 +37,6 @@ const getCustomerData = async (email) => {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-
-  // const email = email || "toth.aron@interfa.hu";
   const body = `<?xml version="1.0" encoding="UTF-8" ?>
   <Params>
         <Email>${email}</Email>
