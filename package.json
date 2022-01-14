@@ -1,6 +1,6 @@
 {
   "name": "interfa-api",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Rest API for Interfa Webshop",
   "main": "src/main.js",
   "author": "Toth Aron",
