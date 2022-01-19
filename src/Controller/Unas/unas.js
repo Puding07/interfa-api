@@ -37,6 +37,7 @@ const getCustomerData = async (email) => {
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
+
   const body = `<?xml version="1.0" encoding="UTF-8" ?>
   <Params>
         <Email>${email}</Email>
